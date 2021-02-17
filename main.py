@@ -11,25 +11,25 @@ smtp_object = smtplib.SMTP('smtp.gmail.com', 587)
 search = input("Input proper stock code:")
 url = "https://www.marketwatch.com/investing/stock/" + search + "?mod=over_search"
 datetime_object = datetime.datetime.now()
-
+s_value = []
+x = [60 * datetime_object.minute]
 
 with open('stock_price.csv', encoding='utf-8') as csv_object:
     csv.writer(csv_object, delimiter=' ')
 
 
 def web_scrapping(boo_rl):
-    s_value = []
+
     stock_value_float = 0.0
     temp_object = datetime.datetime.now()
-    x = [60 * temp_object.minute]
     web_article = requests.get(boo_rl)
     web_article_lxml = bs4.BeautifulSoup(web_article.text, "lxml")
     header_web_article_lxml = web_article_lxml.find_all('h3')  # h2 header also has all the values.
     # print(header_web_article_lxml)
     header_web_article_lxml_str = str(header_web_article_lxml[2]) + str(header_web_article_lxml[3])
-    #print(header_web_article_lxml_str)
+    # print(header_web_article_lxml_str)
     matches = re.findall(r'>.+?<', header_web_article_lxml_str)
-    #print(matches)
+    # print(matches)
     for count, i in enumerate(matches):
         v = matches[count].replace('>', '')  # some times it works for #2, #3 indexes also.
         v = v.replace('<', '')
@@ -42,6 +42,7 @@ def web_scrapping(boo_rl):
     # print('None of the values had the stock price: ')
     # print(stock_value_float, end=' ')
     s_value.append(stock_value_float)
+    # print(s_value, x)
     plt.plot(x, s_value)
     # plt.scatter(sec + 60*datetime_object.minute, stock_value_float)
     plt.pause(1)
