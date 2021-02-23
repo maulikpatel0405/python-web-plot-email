@@ -1,1 +1,1 @@
-Hello!! This is the stock value file. 12.96 12.97 12.97 12.97 12.97 12.97 12.98 12.97 12.98 12.98 
+Hello!! This is the stock value file. 11.58 
